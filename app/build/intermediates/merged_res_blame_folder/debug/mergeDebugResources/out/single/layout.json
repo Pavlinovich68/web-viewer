@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "C:\\Users\\serge\\.gradle\\daemon\\8.13\\com.webviewer.app-mergeDebugResources-32:\\layout\\bottom_sheet_settings.xml",
+        "source": "C:\\Users\\serge\\.gradle\\daemon\\8.13\\com.webviewer.app-main-35:\\layout\\bottom_sheet_settings.xml"
+    },
+    {
+        "merged": "C:\\Users\\serge\\.gradle\\daemon\\8.13\\com.webviewer.app-mergeDebugResources-32:\\layout\\activity_setup.xml",
+        "source": "C:\\Users\\serge\\.gradle\\daemon\\8.13\\com.webviewer.app-main-35:\\layout\\activity_setup.xml"
+    },
+    {
+        "merged": "com.webviewer.app-mergeDebugResources-32:/layout/bottom_sheet_settings.xml",
+        "source": "com.webviewer.app-main-35:/layout/bottom_sheet_settings.xml"
+    },
+    {
+        "merged": "C:\\Users\\serge\\.gradle\\daemon\\8.13\\com.webviewer.app-mergeDebugResources-32:\\layout\\dialog_http_auth.xml",
+        "source": "C:\\Users\\serge\\.gradle\\daemon\\8.13\\com.webviewer.app-main-35:\\layout\\dialog_http_auth.xml"
+    },
+    {
+        "merged": "com.webviewer.app-mergeDebugResources-32:/layout/dialog_popup_blocking.xml",
+        "source": "com.webviewer.app-main-35:/layout/dialog_popup_blocking.xml"
+    },
+    {
+        "merged": "C:\\Users\\serge\\.gradle\\daemon\\8.13\\com.webviewer.app-mergeDebugResources-32:\\layout\\activity_main.xml",
+        "source": "C:\\Users\\serge\\.gradle\\daemon\\8.13\\com.webviewer.app-main-35:\\layout\\activity_main.xml"
+    }
+]
