@@ -46,12 +46,13 @@ class MainActivity : AppCompatActivity() {
         popupBlockRules = parsePopupBlockRules(prefsManager.popupBlockRules)
 
         setupWebView()
+        setupPullToRefresh()
         restoreCookies()
-
-        binding.btnSettings.setOnClickListener { showSettingsSheet() }
+        setupSettingsGesture()
 
         if (savedInstanceState == null) {
             binding.webView.loadUrl(siteUrl)
+            Toast.makeText(this, R.string.settings_long_press_hint, Toast.LENGTH_LONG).show()
         }
     }
 
@@ -76,6 +77,11 @@ class MainActivity : AppCompatActivity() {
             showPopupBlockingDialog()
         }
 
+        sheetView.findViewById<MaterialButton>(R.id.btnRefreshPage).setOnClickListener {
+            bottomSheet.dismiss()
+            reloadCurrentPage(showToast = true)
+        }
+
         sheetView.findViewById<MaterialButton>(R.id.btnClearDataSheet).setOnClickListener {
             bottomSheet.dismiss()
             AlertDialog.Builder(this)
@@ -89,7 +95,7 @@ class MainActivity : AppCompatActivity() {
                     WebViewDatabase.getInstance(this).clearHttpAuthUsernamePassword()
                     binding.webView.clearCache(true)
                     binding.webView.clearHistory()
-                    binding.webView.reload()
+                    reloadCurrentPage(showToast = false)
                     Toast.makeText(this, getString(R.string.btn_clear_data), Toast.LENGTH_SHORT).show()
                 }
                 .setNegativeButton(R.string.no, null)
@@ -116,6 +122,29 @@ class MainActivity : AppCompatActivity() {
             }
             .setNegativeButton(R.string.cancel, null)
             .show()
+    }
+
+    private fun setupSettingsGesture() {
+        binding.webView.setOnLongClickListener {
+            showSettingsSheet()
+            true
+        }
+    }
+
+    private fun setupPullToRefresh() {
+        binding.swipeRefresh.setOnRefreshListener {
+            reloadCurrentPage(showToast = false)
+        }
+        binding.swipeRefresh.setOnChildScrollUpCallback { _, _ ->
+            binding.webView.canScrollVertically(-1)
+        }
+    }
+
+    private fun reloadCurrentPage(showToast: Boolean) {
+        if (showToast) {
+            Toast.makeText(this, R.string.page_refreshed, Toast.LENGTH_SHORT).show()
+        }
+        binding.webView.reload()
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -155,11 +184,13 @@ class MainActivity : AppCompatActivity() {
 
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
+                binding.swipeRefresh.isRefreshing = true
                 binding.progressBar.visibility = View.VISIBLE
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
+                binding.swipeRefresh.isRefreshing = false
                 binding.progressBar.visibility = View.GONE
                 // Сохраняем cookies после каждой загрузки
                 saveCookies()
@@ -222,6 +253,7 @@ class MainActivity : AppCompatActivity() {
             ) {
                 super.onReceivedError(view, request, error)
                 if (request?.isForMainFrame == true) {
+                    binding.swipeRefresh.isRefreshing = false
                     binding.progressBar.visibility = View.GONE
                     Toast.makeText(
                         this@MainActivity,
@@ -236,6 +268,7 @@ class MainActivity : AppCompatActivity() {
             override fun onProgressChanged(view: WebView?, newProgress: Int) {
                 binding.progressBar.progress = newProgress
                 if (newProgress == 100) {
+                    binding.swipeRefresh.isRefreshing = false
                     binding.progressBar.visibility = View.GONE
                 }
             }

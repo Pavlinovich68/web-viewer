@@ -6,6 +6,7 @@
     <string name="btn_save">Сохранить и открыть</string>
     <string name="btn_change_url">Изменить адрес</string>
     <string name="btn_popup_blocking">Блокировка pop-up</string>
+    <string name="btn_refresh_page">Обновить страницу</string>
     <string name="btn_clear_data">Очистить данные</string>
     <string name="error_empty_url">Введите адрес сайта</string>
     <string name="error_invalid_url">Некорректный адрес сайта</string>
@@ -38,4 +39,6 @@
     <string name="popup_blocking_blocked">Всплывающее окно заблокировано</string>
     <string name="popup_blocking_summary_off">Правила не заданы</string>
     <string name="popup_blocking_summary_on">Активных правил: %1$d</string>
+    <string name="settings_long_press_hint">Удерживайте палец на странице, чтобы открыть настройки</string>
+    <string name="page_refreshed">Страница обновляется</string>
 </resources>
